@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .blur-bg {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(
+      circle at center,
+      hsl(var(--primary) / 0.6),
+      transparent 80%
+    );
+    filter: blur(80px);
+    opacity: 0.9;
+    z-index: 0; /* stay behind content */
+  }
+
+  .blur-bg-sm {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+      circle at center,
+      hsl(var(--secondary) / 0.65),
+      transparent 80%
+    );
+    filter: blur(60px);
+    opacity: 0.9;
+    z-index: 0;
+  }
+}
+
+@layer base {
+  :root {
+    /* Indigo-based color system */
+    --hue: 275;
+
+    /* Base surfaces */
+    --background: var(--hue) 50% 97%;
+    --foreground: var(--hue) 10% 10%;
+
+    /* Cards & popovers */
+    --card: var(--hue) 40% 99%;
+    --card-foreground: var(--hue) 10% 10%;
+    --popover: var(--hue) 40% 99%;
+    --popover-foreground: var(--hue) 10% 10%;
+
+    /* Brand colors */
+    --primary: var(--hue) 100% 25%;
+    --primary-foreground: var(--hue) 100% 96%;
+
+    /* Soft lavender accents */
+    --secondary: var(--hue) 60% 85%;
+    --secondary-foreground: var(--hue) 20% 20%;
+
+    /* Muted backgrounds */
+    --muted: var(--hue) 30% 92%;
+    --muted-foreground: var(--hue) 20% 35%;
+
+    --accent: var(--hue) 60% 88%;
+    --accent-foreground: var(--hue) 20% 15%;
+
+    /* Alerts */
+    --destructive: 0 90% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & focus rings */
+    --border: var(--hue) 30% 85%;
+    --input: var(--hue) 30% 85%;
+    --ring: var(--hue) 100% 25%;
+
+    /* Shape radius */
+    --radius: 0.5rem;
+  }
+
+  /* Optional dark mode */
+  .dark {
+    --background: var(--hue) 30% 10%;
+    --foreground: var(--hue) 40% 90%;
+    --card: var(--hue) 30% 15%;
+    --card-foreground: var(--hue) 40% 90%;
+    --primary: var(--hue) 100% 70%;
+    --primary-foreground: var(--hue) 100% 10%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
