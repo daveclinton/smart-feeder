@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorksSection from "@/components/HowItWorks";
 import KeyFeaturesSection from "@/components/KeyFeatures";
 import TrustedSection from "@/components/Trusted";
+import WaitlistSection from "@/components/WaitlistSection";
 import WhyChooseUsSection from "@/components/WhyChooseUs";
 
 export default function HomePage() {
@@ -10,6 +11,7 @@ export default function HomePage() {
     <main>
       {/* pt-24 gives space below the header, pb-16 gives space above the footer */}
       <HeroSection />
+      <WaitlistSection />
       <TrustedSection />
       <KeyFeaturesSection />
       <HowItWorksSection />

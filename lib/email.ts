@@ -231,3 +231,37 @@ If you did not request this, you can ignore this email.`;
     text,
   });
 }
+
+export async function sendWaitlistConfirmationEmailMessage(params: {
+  to: string;
+  name?: string | null;
+}) {
+  const greeting = params.name ? `Hi ${params.name},` : "Hi,";
+  const subject = `You are on the ${appName} waitlist`;
+  const text = `${greeting}
+
+Thanks for joining the ${appName} waitlist.
+We will notify you as soon as the app is ready.
+
+Follow updates at ${appUrl}`;
+  const html = renderProductTemplate({
+    preheader: "You are officially on the Seep Baby waitlist.",
+    eyebrow: "Waitlist Confirmed",
+    title: "You are in. Thanks for joining.",
+    subtitle:
+      "We are still building Seep Baby and will email you the moment early access opens.",
+    primaryLabel: "Visit Seep Baby",
+    primaryUrl: appUrl,
+    secondaryLabel: "Privacy Policy",
+    secondaryUrl: `${appUrl}/privacy-policy`,
+    notice:
+      "You are receiving this email because you joined the Seep Baby waitlist from our landing page.",
+  });
+
+  await sendEmail({
+    to: params.to,
+    subject,
+    html,
+    text,
+  });
+}
