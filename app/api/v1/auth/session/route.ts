@@ -1,12 +1,8 @@
-import { prisma } from "@/lib/prisma";
-
-function getBearerToken(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader) return null;
-  const [scheme, value] = authHeader.split(" ");
-  if (scheme?.toLowerCase() !== "bearer" || !value) return null;
-  return value.trim();
-}
+import {
+  deleteSessionById,
+  getBearerToken,
+  getSessionFromBearerToken,
+} from "@/lib/bearer-session";
 
 export async function GET(request: Request) {
   const token = getBearerToken(request);
@@ -14,17 +10,13 @@ export async function GET(request: Request) {
     return Response.json({ error: "Missing bearer token." }, { status: 401 });
   }
 
-  const sessionRecord = await prisma.session.findUnique({
-    where: { token },
-    include: { user: true },
-  });
-
+  const sessionRecord = await getSessionFromBearerToken(token);
   if (!sessionRecord) {
     return Response.json({ error: "Invalid session." }, { status: 401 });
   }
 
   if (sessionRecord.expiresAt <= new Date()) {
-    await prisma.session.delete({ where: { id: sessionRecord.id } }).catch(() => {});
+    await deleteSessionById(sessionRecord.id);
     return Response.json({ error: "Session expired." }, { status: 401 });
   }
 
